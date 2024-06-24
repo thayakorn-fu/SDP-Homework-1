@@ -12,27 +12,27 @@ This project is a simple Spring Boot application that provides an API for managi
 
 1. Clone the repository:
 
-\`\`\`bash
+```bash
 git clone https://github.com/yourusername/SDP-Homework-1.git
-\`\`\`
+```
 
 2. Navigate to the project directory:
 
-\`\`\`bash
+```bash
 cd SDP-Homework-1
-\`\`\`
+`````
 
 3. Build the project using Gradle:
 
-\`\`\`bash
+```bash
 ./gradlew build
-\`\`\`
+````
 
 4. Run the application:
 
-\`\`\`bash
+```bash
 ./gradlew bootRun
-\`\`\`
+````
 
 ## Usage
 
@@ -45,9 +45,9 @@ The application provides the following endpoints:
 
 The project contains unit tests for the `Product` class and the `ApiController` class. You can run the tests using the following command:
 
-\`\`\`bash
+```bash
 ./gradlew test
-\`\`\`
+````
 
 ## Contributing
 
