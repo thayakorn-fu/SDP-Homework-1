@@ -23,7 +23,7 @@ public class ApiController {
         return "Hello from API!";
     }
     @GetMapping("/pagedApi")
-    public List<Product> getPagedApi(@RequestParam(defaultValue = "1") int page, @RequestParam(defaultValue = "15") int numberOfProducts) {
+    public static List<Product> getPagedApi(@RequestParam(defaultValue = "1") int page, @RequestParam(defaultValue = "15") int numberOfProducts) {
         numberOfProducts = Math.min(numberOfProducts, 30);
         int start = (page - 1) * numberOfProducts;
         int end = Math.min(start + numberOfProducts, PRODUCTS.size());

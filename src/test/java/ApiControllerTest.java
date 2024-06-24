@@ -1,33 +1,49 @@
 import org.example.ApiController;
 import org.example.Main;
 import org.example.Product;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 
 
+import java.util.ArrayList;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.mockito.Mockito.*;
 
 @SpringBootTest(classes = Main.class)
 public class ApiControllerTest {
 
-    @MockBean
-    private ApiController apiController;
+    private List<Product> dummyProducts;
+
+    @BeforeEach
+    public void setUp() {
+        dummyProducts = new ArrayList<>();
+        for (int i = 1; i <= 30; i++) {
+            dummyProducts.add(new Product("imageURL" + i, "productName" + i, i * 10.0, i * 10, i % 2 == 0));
+        }
+    }
 
     @Test
     public void testGetPagedApi() {
         Product product1 = new Product("imageURL1", "productName1", 100.0, 10, true);
-        Product product2 = new Product("imageURL2", "productName2", 200.0, 20, false);
+        List<Product> products = ApiController.getPagedApi(1, 15);
 
-        when(apiController.getPagedApi(1, 15)).thenReturn(List.of(product1, product2));
+        assertEquals(15, products.size());
+        assertEquals(product1.getProductName(), products.get(0).getProductName());
+    }
 
-        List<Product> products = apiController.getPagedApi(1, 15);
 
-        assertEquals(2, products.size());
-        assertEquals(product1, products.get(0));
-        assertEquals(product2, products.get(1));
+    @Test
+    public void testPaginationLogic() {
+        int page = 1;
+        int numberOfProducts = 20;
+        int start = (page - 1) * numberOfProducts;
+        int end = Math.min(start + numberOfProducts, dummyProducts.size());
+        List<Product> expectedProducts = dummyProducts.subList(start, end);
+        List<Product> actualProducts = ApiController.getPagedApi(page, numberOfProducts);
+
+        assertEquals(expectedProducts.size(), actualProducts.size());
     }
 }
